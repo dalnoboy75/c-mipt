@@ -38,3 +38,4 @@ SpaceAroundPointerQualifiers: Default
 SeparateDefinitionBlocks: Always
 SpacesBeforeTrailingComments: 2
 TabWidth: 2
+indentWidth: 4

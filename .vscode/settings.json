@@ -5,8 +5,6 @@
     },
     "code-runner.runInTerminal": true,
     "code-runner.executorMap": {
-        
-
         "cpp": "cd $dir && g++ -std=c++17 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
         "javascript": "node",
         "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
@@ -62,5 +60,8 @@
     },
     "files.autoSave": "afterDelay",
     "emmet.useInlineCompletions": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "tuple": "cpp"
+    }
 }

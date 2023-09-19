@@ -1,7 +1,8 @@
-#include <C:\Projects\mipt 1 sem\lib123\std_lib_facilities.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main ()
 {
-  cout << 3;
+  vector<char> a(26);
+  cout << "'" << a[1] << "'";
 }
