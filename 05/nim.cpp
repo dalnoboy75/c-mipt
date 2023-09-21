@@ -79,18 +79,15 @@ vector<int> check_ans (string ans)
     if (isdigit(ans[i]))
     {
       n += ans[i];
-      cout << n << endl << "ssads " << ans.size() << i << endl;
     }
-    else if ((ans[i] == ' ' || i == (ans.size() - 1)) && n != "")
+    if ((ans[i] == ' ' || i == (ans.size() - 1)) && n != "")
     {
-      cout << "kek" << endl;
       checked.push_back(stoi(n));
       n = "";
     }
-    else
-    {
-      return {0};
-    }
+    if (ans[i] != ' ' && !isdigit(ans[i])) {
+            return {0};
+        }
   }
   if (checked.size() > 2)
     return {0};
@@ -106,15 +103,19 @@ void player (vector<int>& num)
   {
     if (!cin)
     {
-      throw runtime_error("Игра завершена");
+      error("Игра завершена");
+      return;
     }
-    cout << s << "aaa" << endl;
+    if (s.size() == 0){
+       cout << "Неправильный ввод, попробуйте снова\n";
+      player(num);
+      break;
+    }
     vector<int> ans = check_ans(s);
     if (ans.size() == 1 || ans[0] < 1 || ans[0] > num.size() ||
         ans[1] < 1 || ans[1] > num[ans[0] - 1] || ans[0] > num.size())
     {
-      cout << "Неправильный ввод, попробуйте снова\n"
-           << ans[0] << ans.size() << endl;
+      cout << "Неправильный ввод, попробуйте снова\n";
       player(num);
       break;
     }
