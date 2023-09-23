@@ -1,9 +1,12 @@
 #include "../lib1/std_lib_facilities.h"
+#include <cstdlib>
+#include <ctime>
+#include <stdexcept>
 using namespace std;
 
 bool check_game (vector<int>& num);
 void bot (vector<int>& num);
-vector<int> check_ans (string ans, int s);
+vector<int> check_ans (string ans);
 void player (vector<int>& num);
 void game (vector<int>& num);
 
@@ -85,9 +88,10 @@ vector<int> check_ans (string ans)
       checked.push_back(stoi(n));
       n = "";
     }
-    if (ans[i] != ' ' && !isdigit(ans[i])) {
-            return {0};
-        }
+    if (ans[i] != ' ' && !isdigit(ans[i]))
+    {
+      return {0};
+    }
   }
   if (checked.size() > 2)
     return {0};
@@ -103,13 +107,15 @@ void player (vector<int>& num)
   {
     if (!cin)
     {
-      error("Игра завершена");
-      return;
-    }
-    if (s.size() == 0){
-       cout << "Неправильный ввод, попробуйте снова\n";
-      player(num);
+      throw runtime_error("Конец игры");
+      exit(0);
       break;
+    }
+    if (s.size() == 0)
+    {
+      cout << "Неправильный ввод, попробуйте снова\n";
+      player(num);
+      return;
     }
     vector<int> ans = check_ans(s);
     if (ans.size() == 1 || ans[0] < 1 || ans[0] > num.size() ||
@@ -117,7 +123,7 @@ void player (vector<int>& num)
     {
       cout << "Неправильный ввод, попробуйте снова\n";
       player(num);
-      break;
+      return;
     }
     else
     {
@@ -150,17 +156,71 @@ void game (vector<int>& num)
   }
 }
 
+vector<int> made_num ()
+{
+  srand(time(nullptr));
+  cout << "Введите количество рядов(не менее 3 и не более 7)" << endl;
+  string s;
+  while (getline(cin, s))
+  {
+    if (!cin)
+    {
+      throw runtime_error("Конец игры");
+      exit(0);
+      break;
+    }
+    if (s.size() == 0)
+    {
+      cout << "Неправильный ввод, попробуйте снова\n";
+      return made_num();
+    }
+    vector<int> checked;
+    string n = "";
+    for (int i = 0; i < s.size(); i++)
+    {
+      if (isdigit(s[i]))
+      {
+        n += s[i];
+      }
+      if ((s[i] == ' ' || i == (s.size() - 1)) && n != "")
+      {
+        checked.push_back(stoi(n));
+        n = "";
+      }
+      if (s[i] != ' ' && !isdigit(s[i]))
+      {
+        cout << "Неправильный ввод, попробуйте снова\n";
+        return made_num();
+      }
+    }
+    if (checked.size() > 1 || (checked[0] < 3 || checked[0] > 7))
+    {
+      cout << "Неправильный ввод, попробуйте снова\n";
+      return made_num();
+    }
+    cout << "Размер принят" << endl;
+    vector<int> res(checked[0]);
+    for (int i = 0; i < res.size(); i++)
+    {
+      int r = rand() % 4 + 3;
+      res[i] = r;
+    }
+    return res;
+  }
+  return{0};
+}
 int main ()
 {
   try
   {
-    vector<int> num = {3, 4, 5};
     cout << "Приветствуем вас в игре НИМ \nИгра начинается \n";
+    vector<int> num = made_num();
     game(num);
     player(num);
   }
   catch (exception& e)
   {
-    cerr << e.what();
+    cout << e.what() << endl;
+    return 123;
   }
 }
