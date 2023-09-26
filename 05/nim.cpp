@@ -163,11 +163,9 @@ vector<int> made_num ()
   string s;
   while (getline(cin, s))
   {
-    if (!cin)
+    if (cin.fail())
     {
       throw runtime_error("Конец игры");
-      exit(0);
-      break;
     }
     if (s.size() == 0)
     {
@@ -221,6 +219,6 @@ int main ()
   catch (exception& e)
   {
     cout << e.what() << endl;
-    return 123;
+    return 2;
   }
 }
