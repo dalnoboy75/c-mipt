@@ -1,3 +1,13 @@
+/* Добро пожаловать в игру НИМ!!!
+  Ним –– одна из самых старых и увлекательных математических игр. Для игры в ним
+необходим партнёр, стол и набор фишек.Правила нима просты: игроки по
+очереди забирают одну или несколько фишек из любого ряда. Не разрешается за
+один ход брать фишки из нескольких рядов. Выигрывает тот, кто возьмёт
+последнюю фишку (фишки).
+  Более подробная инйформация - https://ru.wikipedia.org/wiki/Ним_(игра)
+  Здесь реализована игра с компьютером */
+
+
 #include "../lib1/std_lib_facilities.h"
 #include <cstdlib>
 #include <ctime>
@@ -10,7 +20,7 @@ vector<int> check_ans (string ans);
 void player (vector<int>& num);
 void game (vector<int>& num);
 
-bool check_game (vector<int>& num)
+bool check_game (vector<int>& num)  //проверка на то, остались ли фишки в игре
 {
   for (auto x : num)
   {
@@ -20,10 +30,10 @@ bool check_game (vector<int>& num)
   return true;
 }
 
-void bot (vector<int>& num)
+void bot (vector<int>& num) // ход компьютера
 {
   bool fl = true;
-  for (int i = 0; i < num.size(); i++)
+  for (int i = 0; i < num.size(); i++) // расчёт оптимального хода
   {
     if (num[i] > 0 && fl)
     {
@@ -57,7 +67,7 @@ void bot (vector<int>& num)
       }
     }
   }
-  if (fl)
+  if (fl) // если оптимального кода нет, убираем 1 фишку из любого непустого ряда
   {
     for (int i = 0; i < num.size(); i++)
     {
@@ -73,7 +83,7 @@ void bot (vector<int>& num)
   }
 }
 
-vector<int> check_ans (string ans)
+vector<int> check_ans (string ans) // проверка корректности ввода игрока
 {
   vector<int> checked;
   string n = "";
@@ -99,7 +109,7 @@ vector<int> check_ans (string ans)
   return checked;
 }
 
-void player (vector<int>& num)
+void player (vector<int>& num) // ход игрока
 {
   cout << "Ваш ход. Введите номер ряда и количество фишек \n";
   string s;
@@ -143,7 +153,7 @@ void player (vector<int>& num)
   }
 }
 
-void game (vector<int>& num)
+void game (vector<int>& num) // отрисовка поля
 {
   for (int i = 0; i < num.size(); i++)
   {
@@ -156,7 +166,7 @@ void game (vector<int>& num)
   }
 }
 
-vector<int> made_num ()
+vector<int> made_num () // генерация рядов игры
 {
   srand(time(nullptr));
   cout << "Введите количество рядов(не менее 3 и не более 7)" << endl;
@@ -200,7 +210,7 @@ vector<int> made_num ()
     vector<int> res(checked[0]);
     for (int i = 0; i < res.size(); i++)
     {
-      int r = rand() % 4 + 3;
+      int r = rand() % 5 + 3;
       res[i] = r;
     }
     return res;
