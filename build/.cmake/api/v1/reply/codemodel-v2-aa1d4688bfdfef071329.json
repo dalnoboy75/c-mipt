@@ -1,0 +1,81 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "07/calculator",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-07.calculator-Debug-3a0199f5d630b6198174.json",
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "07/calculator",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "calculator",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "calculator::@4dd4429937f2f6fe911f",
+					"jsonFile" : "target-calculator-Debug-1a284152b6394b303f0f.json",
+					"name" : "calculator",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Projects/c-mipt/build",
+		"source" : "C:/Projects/c-mipt"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

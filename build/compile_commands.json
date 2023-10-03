@@ -1,0 +1,7 @@
+[
+{
+  "directory": "C:/Projects/c-mipt/build/07/calculator",
+  "command": "C:/Users/ivan/gcc/bin/g++.exe  @CMakeFiles/calculator.dir/includes_CXX.rsp -pedantic -Wall -Wextra -g -std=gnu++17 -o CMakeFiles/calculator.dir/calculator.obj -c C:/Projects/c-mipt/07/calculator/calculator.cpp",
+  "file": "C:/Projects/c-mipt/07/calculator/calculator.cpp"
+}
+]

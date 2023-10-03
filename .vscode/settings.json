@@ -62,6 +62,10 @@
     "emmet.useInlineCompletions": true,
     "editor.formatOnSave": true,
     "files.associations": {
-        "tuple": "cpp"
-    }
+        "tuple": "cpp",
+        "iostream": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+    "cmake.configureOnOpen": false,
+    "cmake.installPrefix": "${workspaceFolder}"
 }

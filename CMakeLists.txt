@@ -1,11 +1,8 @@
-cmake_minimum_required(VERSION 3.26)
-project(c_mipt)
-
-set(CMAKE_CXX_STANDARD 14)
-
-
-add_executable(c_mipt
-        01/hello.cpp
-        02/les.cpp
-        03/task.cpp
-        05/eng.cpp)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDART_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
+set(LIB_DIR "./lib1")
+include_directories(
+        ${LIB_DIR}
+)
+add_subdirectory("07/calculator")

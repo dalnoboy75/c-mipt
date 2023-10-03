@@ -1,0 +1,13 @@
+C:/Projects/c-mipt/build/CMakeFiles/edit_cache.dir
+C:/Projects/c-mipt/build/CMakeFiles/rebuild_cache.dir
+C:/Projects/c-mipt/build/CMakeFiles/list_install_components.dir
+C:/Projects/c-mipt/build/CMakeFiles/install.dir
+C:/Projects/c-mipt/build/CMakeFiles/install/local.dir
+C:/Projects/c-mipt/build/CMakeFiles/install/strip.dir
+C:/Projects/c-mipt/build/07/calculator/CMakeFiles/calculator.dir
+C:/Projects/c-mipt/build/07/calculator/CMakeFiles/edit_cache.dir
+C:/Projects/c-mipt/build/07/calculator/CMakeFiles/rebuild_cache.dir
+C:/Projects/c-mipt/build/07/calculator/CMakeFiles/list_install_components.dir
+C:/Projects/c-mipt/build/07/calculator/CMakeFiles/install.dir
+C:/Projects/c-mipt/build/07/calculator/CMakeFiles/install/local.dir
+C:/Projects/c-mipt/build/07/calculator/CMakeFiles/install/strip.dir
