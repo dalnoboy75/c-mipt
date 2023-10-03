@@ -1,12 +1,11 @@
 /* Добро пожаловать в игру НИМ!!!
-  Ним –– одна из самых старых и увлекательных математических игр. Для игры в ним
-необходим партнёр, стол и набор фишек.Правила нима просты: игроки по
+  Ним –– одна из самых старых и увлекательных математических игр. Для игры в
+ним необходим партнёр, стол и набор фишек.Правила нима просты: игроки по
 очереди забирают одну или несколько фишек из любого ряда. Не разрешается за
 один ход брать фишки из нескольких рядов. Выигрывает тот, кто возьмёт
 последнюю фишку (фишки).
-  Более подробная инйформация - https://ru.wikipedia.org/wiki/Ним_(игра)
+  Более подробная информация - https://ru.wikipedia.org/wiki/Ним_(игра)
   Здесь реализована игра с компьютером */
-
 
 #include "../lib1/std_lib_facilities.h"
 #include <cstdlib>
@@ -20,7 +19,8 @@ vector<int> check_ans (string ans);
 void player (vector<int>& num);
 void game (vector<int>& num);
 
-bool check_game (vector<int>& num)  //проверка на то, остались ли фишки в игре
+bool check_game (
+    vector<int>& num)  // проверка на то, остались ли фишки в игре
 {
   for (auto x : num)
   {
@@ -30,10 +30,10 @@ bool check_game (vector<int>& num)  //проверка на то, осталис
   return true;
 }
 
-void bot (vector<int>& num) // ход компьютера
+void bot (vector<int>& num)  // ход компьютера
 {
   bool fl = true;
-  for (int i = 0; i < num.size(); i++) // расчёт оптимального хода
+  for (int i = 0; i < num.size(); i++)  // расчёт оптимального хода
   {
     if (num[i] > 0 && fl)
     {
@@ -52,6 +52,7 @@ void bot (vector<int>& num) // ход компьютера
           fl = false;
           num[i] -= j;
           cout << "Компьютер сделал ход\n";
+          /*
           if (check_game(num))
           {
             cout << "Компьютер победил. Игра окончена\n";
@@ -63,11 +64,13 @@ void bot (vector<int>& num) // ход компьютера
             player(num);
             break;
           }
+          */
         }
       }
     }
   }
-  if (fl) // если оптимального кода нет, убираем 1 фишку из любого непустого ряда
+  if (fl)  // если оптимального хода нет, убираем 1 фишку из любого
+           // непустого ряда
   {
     for (int i = 0; i < num.size(); i++)
     {
@@ -75,15 +78,17 @@ void bot (vector<int>& num) // ход компьютера
       {
         num[i] -= 1;
         cout << "Компьютер сделал ход \n";
+        /*
         game(num);
         player(num);
+        */
         break;
       }
     }
   }
 }
 
-vector<int> check_ans (string ans) // проверка корректности ввода игрока
+vector<int> check_ans (string ans)  // проверка корректности ввода игрока
 {
   vector<int> checked;
   string n = "";
@@ -109,7 +114,7 @@ vector<int> check_ans (string ans) // проверка корректности 
   return checked;
 }
 
-void player (vector<int>& num) // ход игрока
+void player (vector<int>& num)  // ход игрока
 {
   cout << "Ваш ход. Введите номер ряда и количество фишек \n";
   string s;
@@ -127,6 +132,14 @@ void player (vector<int>& num) // ход игрока
       player(num);
       return;
     }
+
+    /*struct PlayerTern { int row; int chip_count; };
+    PlayerTurt tern = ParseInput(inpit);
+    bool is_correct_turn = CheckTurn(turn);
+
+    if (!is_correct_turn) { ... }
+*/
+
     vector<int> ans = check_ans(s);
     if (ans.size() == 1 || ans[0] < 1 || ans[0] > num.size() ||
         ans[1] < 1 || ans[1] > num[ans[0] - 1] || ans[0] > num.size())
@@ -142,6 +155,7 @@ void player (vector<int>& num) // ход игрока
       break;
     }
   }
+  /*
   if (check_game(num))
   {
     cout << "Вы выиграли. Игра окончена\n";
@@ -151,9 +165,10 @@ void player (vector<int>& num) // ход игрока
     game(num);
     bot(num);
   }
+  */
 }
 
-void game (vector<int>& num) // отрисовка поля
+void game (vector<int>& num)  // отрисовка поля
 {
   for (int i = 0; i < num.size(); i++)
   {
@@ -166,7 +181,7 @@ void game (vector<int>& num) // отрисовка поля
   }
 }
 
-vector<int> made_num () // генерация рядов игры
+vector<int> made_num ()  // генерация рядов игры
 {
   srand(time(nullptr));
   cout << "Введите количество рядов(не менее 3 и не более 7)" << endl;
@@ -215,16 +230,40 @@ vector<int> made_num () // генерация рядов игры
     }
     return res;
   }
-  return{0};
+  return {0};
 }
+
 int main ()
 {
   try
   {
     cout << "Приветствуем вас в игре НИМ \nИгра начинается \n";
     vector<int> num = made_num();
+    bool is_game_ended = false;
     game(num);
-    player(num);
+    bool is_player_turn = true;
+    while (!is_game_ended)
+    {
+      if (is_player_turn)
+      {
+        player(num);
+        is_player_turn = false;
+      }
+      else
+      {
+        bot(num);
+        is_player_turn = true;
+      }
+      game(num);
+      if (check_game(num))
+      {
+        if (!is_player_turn)
+          cout << "Вы выиграли. Игра окончена\n";
+        else
+          cout << "Компьютер победил. Игра окончена\n";
+        is_game_ended = true;
+      }
+    }
   }
   catch (exception& e)
   {
