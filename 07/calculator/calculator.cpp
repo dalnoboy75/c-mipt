@@ -6,7 +6,7 @@
   We have inserted 3 bugs that the compiler will catch and 3 that it won't.
 */
 
-#include "../lib1/std_lib_facilities.h"
+#include "../../lib1/std_lib_facilities.h"
 
 struct Token
 {
@@ -102,8 +102,8 @@ Token Token_stream::get()
       string s;
       s += ch;
       while (cin.get(ch) && (isalpha(ch) || isdigit(ch)))
-        s = ch;
-      cin.putback(ch);
+        s += ch;
+      // cin.putback(ch);
 
       if (s == declkey)
         return Token{let};
