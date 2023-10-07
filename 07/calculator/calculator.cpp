@@ -101,9 +101,9 @@ Token Token_stream::get()
     {
       string s;
       s += ch;
-      while (cin.get(ch) && (isalpha(ch) || isdigit(ch)))
+      while (cin.get(ch) && (isalpha(ch) || isdigit(ch) || ch == '_'))
         s += ch;
-      // cin.putback(ch);
+      cin.putback(ch);
 
       if (s == declkey)
         return Token{let};
@@ -148,14 +148,14 @@ double get_value (string s)
   error("get: undefined name ", s);
 }
 
-void set_value (string s, double d)
+double set_value (string s, double d)
 {
   for (int i = 0; i <= var_table.size(); ++i)
   {
     if (var_table[i].name == s)
     {
       var_table[i].value = d;
-      return;
+      return d;
     }
   }
 
@@ -195,7 +195,8 @@ double primary ()
     double d = expression();
     t = ts.get();
     if (t.kind != ')')
-      error("'(' expected");
+      error("')' expected");
+    return d;
   }
 
   case '-':
@@ -277,7 +278,13 @@ double declaration ()
 
   string var = t.name;
   if (is_declared(var))
-    error(var, " declared twice");
+  {
+    t = ts.get();
+    if (t.kind != '=')
+      error("'=' missing in declaration of ", var);
+
+    return set_value(var, expression());
+  }
 
   t = ts.get();
   if (t.kind != '=')
