@@ -49,10 +49,12 @@ constexpr char print = ';';
 constexpr char number = '8';
 constexpr char name = 'a';
 constexpr char let = 'L';
+constexpr char cons = 'C';
 
 const string prompt = "> ";
 const string result = "= ";
 const string declkey = "let";
+const string constkey = "const";
 
 Token Token_stream::get()
 {
@@ -107,7 +109,8 @@ Token Token_stream::get()
 
       if (s == declkey)
         return Token{let};
-
+      if (s == constkey)
+        return Token{cons};
       return Token{name, s};
     }
     error("Bad token");
@@ -134,12 +137,25 @@ struct Variable
   string name;
   double value;
 
-  Variable(string n, double v) : name{n}, value{v} {}
+  bool is_const;
+
+  Variable(string n, double v, bool c) : name{n}, value{v}, is_const(c) {}
 };
 
-vector<Variable> var_table;
+class Symbol_table
+{
+public:
+  vector<Variable> var_table;
+  Symbol_table(){};
+  double get (string s);
+  double set (string s, double d);
+  bool is_declared (string s);
+  double define (string var, double val, bool c);
+};
 
-double get_value (string s)
+Symbol_table st;
+
+double Symbol_table::get(string s)
 {
   for (int i = 0; i < var_table.size(); ++i)
     if (var_table[i].name == s)
@@ -148,12 +164,14 @@ double get_value (string s)
   error("get: undefined name ", s);
 }
 
-double set_value (string s, double d)
+double Symbol_table::set(string s, double d)
 {
   for (int i = 0; i <= var_table.size(); ++i)
   {
     if (var_table[i].name == s)
     {
+      if (var_table[i].is_const)
+        error("const cannot change");
       var_table[i].value = d;
       return d;
     }
@@ -162,7 +180,7 @@ double set_value (string s, double d)
   error("set: undefined name ", s);
 }
 
-bool is_declared (string s)
+bool Symbol_table::is_declared(string s)
 {
   for (int i = 0; i < var_table.size(); ++i)
     if (var_table[i].name == s)
@@ -171,12 +189,12 @@ bool is_declared (string s)
   return false;
 }
 
-double define_name (string var, double val)
+double Symbol_table::define(string var, double val, bool c)
 {
   if (is_declared(var))
     error(var, " declared twice");
 
-  var_table.push_back(Variable{var, val});
+  var_table.push_back(Variable{var, val, c});
 
   return val;
 }
@@ -208,7 +226,7 @@ double primary ()
     return t.value;
 
   case name:
-    return get_value(t.name);
+    return st.get(t.name);
 
   default:
     error("primary expected");
@@ -277,20 +295,37 @@ double declaration ()
     error("name expected in declaration");
 
   string var = t.name;
-  if (is_declared(var))
+  if (st.is_declared(var))
   {
     t = ts.get();
     if (t.kind != '=')
       error("'=' missing in declaration of ", var);
 
-    return set_value(var, expression());
+    return st.set(var, expression());
   }
 
   t = ts.get();
   if (t.kind != '=')
     error("'=' missing in declaration of ", var);
 
-  return define_name(var, expression());
+  return st.define(var, expression(), false);
+}
+
+double const_declaration ()
+{
+  Token t = ts.get();
+  if (t.kind != name)
+    error("name expected in declaration");
+
+  string var = t.name;
+  if (st.is_declared(var))
+    error("const cannot change");
+
+  t = ts.get();
+  if (t.kind != '=')
+    error("'=' missing in declaration of ", var);
+
+  return st.define(var, expression(), true);
 }
 
 double statement ()
@@ -300,6 +335,8 @@ double statement ()
   {
   case let:
     return declaration();
+  case cons:
+    return const_declaration();
   default:
     ts.putback(t);
     return expression();
@@ -333,8 +370,8 @@ void calculate ()
 int main ()
 try
 {
-  define_name("pi", 3.141592653589793);
-  define_name("e", 2.718281828459045);
+  st.define("pi", 3.141592653589793, true);
+  st.define("e", 2.718281828459045, true);
 
   calculate();
 }
