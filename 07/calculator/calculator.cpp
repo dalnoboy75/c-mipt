@@ -50,11 +50,15 @@ constexpr char number = '8';
 constexpr char name = 'a';
 constexpr char let = 'L';
 constexpr char cons = 'C';
+constexpr char enter_word = '\n';
+constexpr char help = 'H';
 
 const string prompt = "> ";
 const string result = "= ";
 const string declkey = "let";
 const string constkey = "const";
+const string helpkey = "help";
+const string quitkey = "quit";
 
 Token Token_stream::get()
 {
@@ -65,8 +69,11 @@ Token Token_stream::get()
   }
 
   char ch;
-  cin >> ch;
-
+  cin.get(ch);
+  while (cin && ch == ' ')
+    cin.get(ch);
+  if (!cin)
+    return Token{quit};
   switch (ch)
   {
   case '(':
@@ -78,6 +85,7 @@ Token Token_stream::get()
   case '%':
   case ';':
   case '=':
+  case enter_word:
     return Token{ch};
 
   case '.':
@@ -111,6 +119,10 @@ Token Token_stream::get()
         return Token{let};
       if (s == constkey)
         return Token{cons};
+      if (s == helpkey)
+        return Token{help};
+      if (s == quitkey)
+        return Token{quit};
       return Token{name, s};
     }
     error("Bad token");
@@ -127,8 +139,8 @@ void Token_stream::ignore(char c)
   full = false;
 
   char ch;
-  while (cin >> ch)
-    if (ch == c)
+  while (cin.get(ch))
+    if (ch == c || ch == enter_word)
       return;
 }
 
@@ -345,6 +357,19 @@ double statement ()
 
 void clean_up_mess () { ts.ignore(print); }
 
+void user_help ()
+{
+  cout << "Калькулятор предназначен для выполнения различных операций:\n\n";
+  cout << "Простые арифметические операции: +, -, *, / \n\n";
+  cout << "Возможность создания переменных и констант с помощью слов let и "
+          "const\n\n";
+  cout << "Для того, чтобы воспользоваться калькулятором, введите "
+          "выражение\n\n";
+  cout << "Для получения результата, введите символ ';' или нажмите Enter "
+          "\n\n ";
+  cout << "Для выхода из программы введите  quit\n";
+}
+
 void calculate ()
 {
   while (true)
@@ -352,13 +377,20 @@ void calculate ()
     {
       cout << prompt;
       Token t = ts.get();
-      while (t.kind == print)
+      
+      while (t.kind == print || t.kind == enter_word)
         t = ts.get();
       if (t.kind == quit)
         return;
-
-      ts.putback(t);
-      cout << result << statement() << endl;
+      if (t.kind == help)
+      {
+        user_help();
+      }
+      else
+      {
+        ts.putback(t);
+        cout << result << statement() << endl;
+      }
     }
     catch (runtime_error& e)
     {
