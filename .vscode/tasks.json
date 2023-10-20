@@ -3,7 +3,7 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe сборка активного файла",
-            "command": "C:\\Users\\ivan\\gcc\\bin\\g++.exe",
+            "command": "C:\\minGW\\mingw64\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
@@ -26,7 +26,7 @@
         {
             "type": "cppbuild",
             "label": "C/C++: gcc.exe build active file",
-            "command": "C:/Users/ivan/gcc/bin/gcc.exe",
+            "command": "C:\\minGW\\mingw64\\bin\\gcc.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
@@ -35,7 +35,7 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
-                "cwd": "C:/Users/ivan/gcc/bin"
+                "cwd": "C:/minGW/mingw64/bin"
             },
             "problemMatcher": [
                 "$gcc"

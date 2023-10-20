@@ -1,5 +1,6 @@
 {
     "configurations": [
+        
         {
             "name": "(gdb) Запустить",
             "type": "cppdbg",
@@ -36,7 +37,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Users\\ivan\\gcc\\bin\\gdb.exe",
+            "miDebuggerPath": "C:\\minGW\\mingw64\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Включить автоматическое форматирование для gdb",
@@ -58,11 +59,11 @@
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "C:/Users/ivan/gcc/bin",
+            "cwd": "C:/minGW/mingw64/bin",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Users\\ivan\\gcc\\bin\\gdb.exe",
+            "miDebuggerPath": "C:\\minGW\\mingw64\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
